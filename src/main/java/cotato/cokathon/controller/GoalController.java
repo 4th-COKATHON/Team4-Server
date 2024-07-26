@@ -4,6 +4,7 @@ import cotato.cokathon.apipayload.ApiResponse;
 import cotato.cokathon.dto.request.GoalCreateRequest;
 import cotato.cokathon.dto.response.GoalCreateResponse;
 import cotato.cokathon.dto.response.GoalDetailResponse;
+import cotato.cokathon.dto.response.GoalListResponse;
 import cotato.cokathon.service.GoalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,5 +31,17 @@ public class GoalController {
     @Operation(summary = "유저 버킷리스트 상세정보 조회", description = "유저 버킷리스트 상세정보를 조회합니다")
     public ApiResponse<GoalDetailResponse> getGoalDetail(@PathVariable Long goalId) {
         return ApiResponse.onSuccess(goalService.getGoalDetail(goalId));
+    }
+
+    @GetMapping
+    @Operation(summary = "유저 버킷리스트 리스트 조회(미달성)", description = "달성 중인 유저 버킷리스트를 조회합니다")
+    public ApiResponse<GoalListResponse> getGoalList() {
+        return ApiResponse.onSuccess(goalService.getGoalList());
+    }
+
+    @GetMapping("/finished")
+    @Operation(summary = "유저 버킷리스트 리스트 조회(달성)", description = "달성한 유저 버킷리스트를 조회합니다")
+    public ApiResponse<GoalListResponse> getGoalFinishedList() {
+        return ApiResponse.onSuccess(goalService.getGoalFinishedList());
     }
 }

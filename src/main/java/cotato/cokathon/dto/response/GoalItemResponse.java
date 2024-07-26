@@ -5,11 +5,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoalCreateResponse {
+public class GoalItemResponse {
 
-    private Long goalId;
+    private Long id;
+    private String content;
+    private Boolean finished;
+    private LocalDateTime dueDate;
 }

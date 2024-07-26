@@ -3,8 +3,7 @@ package cotato.cokathon.service;
 import cotato.cokathon.apipayload.code.status.ErrorStatus;
 import cotato.cokathon.apipayload.handler.TempHandler;
 import cotato.cokathon.dto.request.GoalCreateRequest;
-import cotato.cokathon.dto.response.GoalCreateResponse;
-import cotato.cokathon.dto.response.GoalDetailResponse;
+import cotato.cokathon.dto.response.*;
 import cotato.cokathon.entity.bucketList.BucketList;
 import cotato.cokathon.entity.goal.Goal;
 import cotato.cokathon.entity.goal.GoalImage;
@@ -30,24 +29,19 @@ public class GoalService {
     @Transactional
     public GoalCreateResponse createGoal(GoalCreateRequest goalCreateRequest) {
 
-        List<Long> goalIds = new ArrayList<>();
+        BucketList bucketList = bucketListRepository.findById(goalCreateRequest.getBucketListId())
+                .orElseThrow(() -> new TempHandler(ErrorStatus.BUCKETLIST_NOT_FOUND));
 
-        for (Long bucketListId : goalCreateRequest.getBucketListIds()) {
+        Goal goal = Goal.builder()
+                .year(LocalDate.now().getYear())
+                .category(bucketList.getCategory().toString())
+                .content(bucketList.getContent())
+                .finished(false)
+                .build();
 
-            BucketList bucketList = bucketListRepository.findById(bucketListId)
-                    .orElseThrow(() -> new TempHandler(ErrorStatus.BUCKETLIST_NOT_FOUND));
+        goalRepository.save(goal);
 
-            Goal goal = Goal.builder()
-                    .year(LocalDate.now().getYear())
-                    .category(bucketList.getCategory().toString())
-                    .content(bucketList.getContent())
-                    .build();
-
-            goalIds.add(goal.getId());
-            goalRepository.save(goal);
-        }
-
-        return new GoalCreateResponse(goalIds);
+        return new GoalCreateResponse(goal.getId());
     }
 
     public GoalDetailResponse getGoalDetail(Long goalId) {
@@ -70,5 +64,48 @@ public class GoalService {
                 .build();
 
         return goalDetailResponse;
+    }
+
+    public GoalListResponse getGoalList() {
+
+        List<Goal> goals = goalRepository.findAllByFinished(false);
+        List<GoalItemResponse> goalItemResponses = new ArrayList<>();
+
+        for (Goal goal : goals) {
+
+            GoalItemResponse goalItemResponse = GoalItemResponse.builder()
+                    .id(goal.getId())
+                    .content(goal.getContent())
+                    .finished(goal.getFinished())
+                    .dueDate(goal.getDueDate())
+                    .build();
+
+            goalItemResponses.add(goalItemResponse);
+        }
+
+        return new GoalListResponse(goalItemResponses);
+    }
+
+    public GoalListResponse getGoalFinishedList() {
+
+        List<Goal> goals = goalRepository.findAllByFinished(true);
+        List<GoalFinishedItemResponse> goalFinishedItemResponses = new ArrayList<>();
+
+        for (Goal goal : goals) {
+
+            GoalImage goalImage = goalImageRepository.findByGoal_Id(goal.getId())
+                    .orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_NOT_FOUND));
+
+            GoalFinishedItemResponse goalFinishedItemResponse = GoalFinishedItemResponse.builder()
+                    .id(goal.getId())
+                    .content(goal.getContent())
+                    .finished(goal.getFinished())
+                    .image_url(goalImage.getImage_url())
+                    .build();
+
+            goalFinishedItemResponses.add(goalFinishedItemResponse);
+        }
+
+        return new GoalListResponse(goalFinishedItemResponses);
     }
 }

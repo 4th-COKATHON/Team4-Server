@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoalCreateResponse {
+public class GoalFinishedItemResponse {
 
-    private Long goalId;
+    private Long id;
+    private String content;
+    private Boolean finished;
+    private String image_url;
 }

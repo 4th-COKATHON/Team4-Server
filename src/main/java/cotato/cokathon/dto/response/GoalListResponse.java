@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoalCreateResponse {
+public class GoalListResponse<T> {
 
-    private Long goalId;
+    private T goals;
 }
