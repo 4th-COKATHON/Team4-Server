@@ -1,4 +1,4 @@
-package cotato.cokathon.config;
+package cotato.cokathon.config.s3;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

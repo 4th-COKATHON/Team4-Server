@@ -38,4 +38,10 @@ public class Goal extends BaseEntity {
     private String category;
 
     private String content;
+
+    public Goal updateAchievement() {
+        this.finished = true;
+        this.finishedDate = LocalDateTime.now();
+        return this;
+    }
 }
