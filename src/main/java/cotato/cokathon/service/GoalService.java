@@ -98,12 +98,15 @@ public class GoalService {
 
         for (Goal goal : goals) {
 
+            GoalImage goalImage = goalImageRepository.findByGoal_Id(goal.getId()).orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_IMAGE_NOT_FOUND));
+
             GoalItemResponse goalItemResponse = GoalItemResponse.builder()
                     .id(goal.getId())
                     .content(goal.getContent())
                     .category(goal.getCategory())
                     .finished(goal.getFinished())
                     .dueDate(goal.getDueDate())
+                    .imageUrl(goalImage.getImage_url())
                     .build();
 
             goalItemResponses.add(goalItemResponse);
