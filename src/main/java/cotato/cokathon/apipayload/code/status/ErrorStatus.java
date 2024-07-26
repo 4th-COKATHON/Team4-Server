@@ -14,7 +14,10 @@ public enum ErrorStatus implements BaseCode {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_SERVER_ERROR", "서버 에러"),
 
     // 세션 에러
-    SESSION_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "유효하지 않은 세션입니다.");
+    SESSION_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "유효하지 않은 세션입니다."),
+
+    // 버킷리스트 관련 에러
+    BUCKETLIST_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 버킷리스트입니다");
 
     private final HttpStatus httpStatus;
     private final String code;

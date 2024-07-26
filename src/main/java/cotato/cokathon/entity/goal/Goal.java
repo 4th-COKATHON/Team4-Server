@@ -35,8 +35,7 @@ public class Goal extends BaseEntity {
 
     private LocalDateTime finishedDate;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private String category;
 
     private String content;
 }
