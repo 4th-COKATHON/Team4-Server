@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface GoalImageRepository extends JpaRepository<GoalImage, Long> {
 
     Optional<GoalImage> findByGoal_Id(Long goalId);
+    Boolean existsByGoal_Id(Long goalId);
 }
