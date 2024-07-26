@@ -1,7 +1,7 @@
 package cotato.cokathon.entity.goal;
 
 import cotato.cokathon.entity.BaseEntity;
-import cotato.cokathon.entity.User;
+import cotato.cokathon.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +23,7 @@ public class Goal extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
     private String comment;
 
