@@ -20,7 +20,12 @@ public enum ErrorStatus implements BaseCode {
     BUCKETLIST_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 버킷리스트입니다"),
 
     // 유저 버킷리스트 관련 에러
-    GOAL_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 유저 버킷리스트입니다");
+    GOAL_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 유저 버킷리스트입니다"),
+
+    // 유저 버킷리스트 관련 에러
+    GOAL_IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 버킷리스트 이미지입니다"),
+
+    FILE_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 파일입니다");
 
     private final HttpStatus httpStatus;
     private final String code;
