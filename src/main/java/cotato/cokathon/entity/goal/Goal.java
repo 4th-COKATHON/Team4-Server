@@ -39,6 +39,15 @@ public class Goal extends BaseEntity {
 
     private String content;
 
+    public void updateDetail(String comment, LocalDateTime dueDate) {
+        if (comment != null) {
+            this.comment = comment;
+        }
+        if (dueDate != null) {
+            this.dueDate = dueDate;
+        }
+    }
+
     public Goal updateAchievement() {
         this.finished = true;
         this.finishedDate = LocalDateTime.now();
