@@ -47,4 +47,10 @@ public class Goal extends BaseEntity {
             this.dueDate = dueDate;
         }
     }
+
+    public Goal updateAchievement() {
+        this.finished = true;
+        this.finishedDate = LocalDateTime.now();
+        return this;
+    }
 }
