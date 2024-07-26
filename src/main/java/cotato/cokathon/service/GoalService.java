@@ -50,21 +50,38 @@ public class GoalService {
         Goal goal = goalRepository.findById(goalId)
                 .orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_NOT_FOUND));
 
-        GoalImage goalImage = goalImageRepository.findByGoal_Id(goalId)
-                .orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_NOT_FOUND));
+        if (goalImageRepository.existsByGoal_Id(goalId)) {
+            GoalImage goalImage = goalImageRepository.findByGoal_Id(goalId)
+                    .orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_NOT_FOUND));
 
-        GoalDetailResponse goalDetailResponse = GoalDetailResponse.builder()
-                .category(goal.getCategory())
-                .content(goal.getContent())
-                .comment(goal.getComment())
-                .year(goal.getYear())
-                .finished(goal.getFinished())
-                .dueDate(goal.getDueDate())
-                .finishedDate(goal.getFinishedDate())
-                .image_url(goalImage.getImage_url())
-                .build();
+            GoalDetailResponse goalDetailResponse = GoalDetailResponse.builder()
+                    .id(goal.getId())
+                    .category(goal.getCategory())
+                    .content(goal.getContent())
+                    .comment(goal.getComment())
+                    .year(goal.getYear())
+                    .finished(goal.getFinished())
+                    .dueDate(goal.getDueDate())
+                    .finishedDate(goal.getFinishedDate())
+                    .image_url(goalImage.getImage_url())
+                    .build();
 
-        return goalDetailResponse;
+            return goalDetailResponse;
+        }
+        else {
+            GoalDetailResponse goalDetailResponse = GoalDetailResponse.builder()
+                    .id(goal.getId())
+                    .category(goal.getCategory())
+                    .content(goal.getContent())
+                    .comment(goal.getComment())
+                    .year(goal.getYear())
+                    .finished(goal.getFinished())
+                    .dueDate(goal.getDueDate())
+                    .finishedDate(goal.getFinishedDate())
+                    .build();
+
+            return goalDetailResponse;
+        }
     }
 
     public GoalListResponse getGoalList() {
