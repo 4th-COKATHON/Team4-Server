@@ -29,6 +29,7 @@ public class BucketListService {
                     .category(bucketList.getCategory())
                     .content(bucketList.getContent())
                     .image_url(bucketList.getImage_url())
+                    .checked(bucketList.getChecked())
                     .build();
 
             bucketListItemResponses.add(bucketListItemResponse);
@@ -49,6 +50,7 @@ public class BucketListService {
                     .category(bucketList.getCategory())
                     .content(bucketList.getContent())
                     .image_url(bucketList.getImage_url())
+                    .checked(bucketList.getChecked())
                     .build();
 
             bucketListItemResponses.add(bucketListItemResponse);
