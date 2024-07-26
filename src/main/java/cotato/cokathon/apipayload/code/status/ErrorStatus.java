@@ -17,7 +17,10 @@ public enum ErrorStatus implements BaseCode {
     SESSION_UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", "유효하지 않은 세션입니다."),
 
     // 버킷리스트 관련 에러
-    BUCKETLIST_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 버킷리스트입니다");
+    BUCKETLIST_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 버킷리스트입니다"),
+
+    // 유저 버킷리스트 관련 에러
+    GOAL_NOT_FOUND(HttpStatus.NOT_FOUND, "NOT FOUND", "존재하지 않는 유저 버킷리스트입니다");
 
     private final HttpStatus httpStatus;
     private final String code;
