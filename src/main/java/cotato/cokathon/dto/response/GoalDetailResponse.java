@@ -2,7 +2,7 @@ package cotato.cokathon.dto.response;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -16,8 +16,8 @@ public class GoalDetailResponse {
     private String content;
     private String comment;
     private Boolean finished;
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
     private Integer year;
-    private LocalDateTime finishedDate;
+    private LocalDate finishedDate;
     private String image_url;
 }

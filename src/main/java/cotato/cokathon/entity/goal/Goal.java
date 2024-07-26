@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -29,17 +29,17 @@ public class Goal extends BaseEntity {
 
     private Boolean finished;
 
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     private Integer year;
 
-    private LocalDateTime finishedDate;
+    private LocalDate finishedDate;
 
     private String category;
 
     private String content;
 
-    public void updateDetail(String comment, LocalDateTime dueDate) {
+    public void updateDetail(String comment, LocalDate dueDate) {
         if (comment != null) {
             this.comment = comment;
         }
@@ -50,7 +50,7 @@ public class Goal extends BaseEntity {
 
     public Goal updateAchievement() {
         this.finished = true;
-        this.finishedDate = LocalDateTime.now();
+        this.finishedDate = LocalDate.now();
         return this;
     }
 }

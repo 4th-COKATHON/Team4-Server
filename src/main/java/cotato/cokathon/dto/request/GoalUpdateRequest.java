@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoalUpdateRequest {
 
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
     private String comment;
 }
