@@ -18,4 +18,5 @@ public class GoalItemResponse {
     private String category;
     private Boolean finished;
     private LocalDate dueDate;
+    private String imageUrl;
 }
