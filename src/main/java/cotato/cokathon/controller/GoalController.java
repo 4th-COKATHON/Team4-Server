@@ -59,4 +59,9 @@ public class GoalController {
         goalService.deleteGoal(goalId);
         return ApiResponse.onSuccess("삭제 완료됨");
     }
+
+    @GetMapping("/finished-rate")
+    public ApiResponse<Integer> getFinishedRate() {
+        return ApiResponse.onSuccess(goalService.getFinishedRate());
+    }
 }

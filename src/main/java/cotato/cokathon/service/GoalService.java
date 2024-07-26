@@ -156,4 +156,12 @@ public class GoalService {
 
         goalRepository.delete(goal);
     }
+
+    public Integer getFinishedRate() {
+
+        Long totalGoals = goalRepository.count();
+        Long finishedGoals = goalRepository.countByFinished(true);
+
+        return (int) ((double) finishedGoals / totalGoals * 100);
+    }
 }

@@ -9,4 +9,5 @@ public interface GoalRepository extends JpaRepository<Goal, Long> {
 
     List<Goal> findAllByFinishedOrderByDueDateAsc(Boolean finished);
     List<Goal> findAllByFinishedOrderByFinishedDateDesc(Boolean finished);
+    Long countByFinished(Boolean finished);
 }
