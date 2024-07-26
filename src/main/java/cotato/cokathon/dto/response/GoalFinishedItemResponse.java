@@ -13,6 +13,7 @@ public class GoalFinishedItemResponse {
 
     private Long id;
     private String content;
+    private String category;
     private Boolean finished;
     private String image_url;
 }
