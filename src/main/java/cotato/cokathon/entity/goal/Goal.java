@@ -38,4 +38,13 @@ public class Goal extends BaseEntity {
     private String category;
 
     private String content;
+
+    public void updateDetail(String comment, LocalDateTime dueDate) {
+        if (comment != null) {
+            this.comment = comment;
+        }
+        if (dueDate != null) {
+            this.dueDate = dueDate;
+        }
+    }
 }

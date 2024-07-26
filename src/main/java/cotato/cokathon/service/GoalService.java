@@ -3,6 +3,7 @@ package cotato.cokathon.service;
 import cotato.cokathon.apipayload.code.status.ErrorStatus;
 import cotato.cokathon.apipayload.handler.TempHandler;
 import cotato.cokathon.dto.request.GoalCreateRequest;
+import cotato.cokathon.dto.request.GoalUpdateRequest;
 import cotato.cokathon.dto.response.*;
 import cotato.cokathon.entity.bucketList.BucketList;
 import cotato.cokathon.entity.goal.Goal;
@@ -107,5 +108,26 @@ public class GoalService {
         }
 
         return new GoalListResponse(goalFinishedItemResponses);
+    }
+
+    @Transactional
+    public GoalUpdateResponse updateGoal(Long goalId, GoalUpdateRequest goalUpdateRequest) {
+
+        Goal goal = goalRepository.findById(goalId)
+                .orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_NOT_FOUND));
+
+        goal.updateDetail(goalUpdateRequest.getComment(), goalUpdateRequest.getDueDate());
+        goalRepository.save(goal);
+
+        return new GoalUpdateResponse(goal.getId());
+    }
+
+    @Transactional
+    public void deleteGoal(Long goalId) {
+
+        Goal goal = goalRepository.findById(goalId)
+                .orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_NOT_FOUND));
+
+        goalRepository.delete(goal);
     }
 }

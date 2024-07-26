@@ -2,9 +2,11 @@ package cotato.cokathon.controller;
 
 import cotato.cokathon.apipayload.ApiResponse;
 import cotato.cokathon.dto.request.GoalCreateRequest;
+import cotato.cokathon.dto.request.GoalUpdateRequest;
 import cotato.cokathon.dto.response.GoalCreateResponse;
 import cotato.cokathon.dto.response.GoalDetailResponse;
 import cotato.cokathon.dto.response.GoalListResponse;
+import cotato.cokathon.dto.response.GoalUpdateResponse;
 import cotato.cokathon.service.GoalService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +24,7 @@ public class GoalController {
     private final GoalService goalService;
 
     @PostMapping
-    @Operation(summary = "유저 버킷리스트 생성", description = "선택한 버킷리스트 수만큼 유저 버킷리스트를 생성합니다")
+    @Operation(summary = "유저 버킷리스트 생성", description = "선택한 버킷리스트를 바탕으로 유저 버킷리스트를 생성합니다")
     public ApiResponse<GoalCreateResponse> createGoal(@RequestBody GoalCreateRequest goalCreateRequest) {
         return ApiResponse.onSuccess(goalService.createGoal(goalCreateRequest));
     }
@@ -43,5 +45,18 @@ public class GoalController {
     @Operation(summary = "유저 버킷리스트 리스트 조회(달성)", description = "달성한 유저 버킷리스트를 조회합니다")
     public ApiResponse<GoalListResponse> getGoalFinishedList() {
         return ApiResponse.onSuccess(goalService.getGoalFinishedList());
+    }
+
+    @PatchMapping("/{goalId}")
+    @Operation(summary = "유저 버킷리스트 상세정보 수정", description = "유저 버킷리스트 목표 날짜, 상세 목표를 수정합니다")
+    public ApiResponse<GoalUpdateResponse> updateGoal(@PathVariable Long goalId, @RequestBody GoalUpdateRequest goalUpdateRequest) {
+        return ApiResponse.onSuccess(goalService.updateGoal(goalId, goalUpdateRequest));
+    }
+
+    @DeleteMapping("/{goalId}")
+    @Operation(summary = "유저 버킷리스트 삭제", description = "유저 버킷리스트를 삭제합니다")
+    public ApiResponse<?> deleteGoal(@PathVariable Long goalId) {
+        goalService.deleteGoal(goalId);
+        return ApiResponse.onSuccess("삭제 완료됨");
     }
 }
