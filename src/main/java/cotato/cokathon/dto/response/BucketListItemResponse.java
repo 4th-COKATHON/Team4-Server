@@ -15,4 +15,5 @@ public class BucketListItemResponse {
     private Long id;
     private Category category;
     private String content;
+    private String image_url;
 }

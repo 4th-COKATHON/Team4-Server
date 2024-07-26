@@ -28,6 +28,7 @@ public class BucketListService {
                     .id(bucketList.getId())
                     .category(bucketList.getCategory())
                     .content(bucketList.getContent())
+                    .image_url(bucketList.getImage_url())
                     .build();
 
             bucketListItemResponses.add(bucketListItemResponse);
@@ -47,6 +48,7 @@ public class BucketListService {
                     .id(bucketList.getId())
                     .category(bucketList.getCategory())
                     .content(bucketList.getContent())
+                    .image_url(bucketList.getImage_url())
                     .build();
 
             bucketListItemResponses.add(bucketListItemResponse);
