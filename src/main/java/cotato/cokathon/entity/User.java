@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -21,5 +21,5 @@ public class User extends BaseEntity {
 
     private String name;
 
-    private LocalDateTime birthdate;
+    private LocalDate birthdate;
 }

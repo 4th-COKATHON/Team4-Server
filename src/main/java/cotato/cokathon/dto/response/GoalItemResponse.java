@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -16,5 +16,5 @@ public class GoalItemResponse {
     private Long id;
     private String content;
     private Boolean finished;
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 }
