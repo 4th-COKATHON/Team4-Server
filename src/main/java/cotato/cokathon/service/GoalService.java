@@ -68,7 +68,7 @@ public class GoalService {
 
     public GoalListResponse getGoalList() {
 
-        List<Goal> goals = goalRepository.findAllByFinished(false);
+        List<Goal> goals = goalRepository.findAllByFinishedOrderByDueDateAsc(false);
         List<GoalItemResponse> goalItemResponses = new ArrayList<>();
 
         for (Goal goal : goals) {
@@ -88,7 +88,7 @@ public class GoalService {
 
     public GoalListResponse getGoalFinishedList() {
 
-        List<Goal> goals = goalRepository.findAllByFinished(true);
+        List<Goal> goals = goalRepository.findAllByFinishedOrderByFinishedDateDesc(true);
         List<GoalFinishedItemResponse> goalFinishedItemResponses = new ArrayList<>();
 
         for (Goal goal : goals) {

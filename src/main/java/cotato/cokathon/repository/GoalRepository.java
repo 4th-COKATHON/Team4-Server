@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface GoalRepository extends JpaRepository<Goal, Long> {
 
-    List<Goal> findAllByFinished(Boolean finished);
+    List<Goal> findAllByFinishedOrderByDueDateAsc(Boolean finished);
+    List<Goal> findAllByFinishedOrderByFinishedDateDesc(Boolean finished);
 }
