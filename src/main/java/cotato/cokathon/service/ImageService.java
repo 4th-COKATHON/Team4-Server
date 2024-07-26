@@ -16,9 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
-
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 @Service
@@ -37,25 +36,47 @@ public class ImageService {
     //로컬 환경에 맞게 바꿔야함
     private String localLocation = "/Users/dong0579/cotato/cokathon/src/main/resources";
 
-    public String imageUpload(MultipartRequest request) throws IOException {
+//    public String imageUpload(MultipartRequest request) throws IOException {
+//
+//        MultipartFile file = request.getFile("upload");
+//
+//        String fileName = file.getOriginalFilename();
+//        String ext = fileName.substring(fileName.indexOf("."));
+//
+//        String uuidFileName = UUID.randomUUID() + ext;
+//        String localPath = localLocation + uuidFileName;
+//
+//        File localFile = new File(localPath);
+//        file.transferTo(localFile);
+//        log.info("Upload image to local file: " + localFile.getAbsolutePath());
+//
+//
+//        s3Config.amazonS3Client().putObject(new PutObjectRequest(bucket, uuidFileName, localFile).withCannedAcl(CannedAccessControlList.PublicRead));
+//        String s3Url = s3Config.amazonS3Client().getUrl(bucket, uuidFileName).toString();
+//
+//        localFile.delete();
+//
+//        return s3Url;
+//    }
 
+    public String imageUpload(MultipartRequest request) throws IOException {
         MultipartFile file = request.getFile("upload");
 
+        if (file == null || file.isEmpty()) {
+            throw new TempHandler(ErrorStatus.FILE_NOT_FOUND);
+        }
+
         String fileName = file.getOriginalFilename();
-        String ext = fileName.substring(fileName.indexOf("."));
-
+        String ext = fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : "";
         String uuidFileName = UUID.randomUUID() + ext;
-        String localPath = localLocation + uuidFileName;
 
-        File localFile = new File(localPath);
-        file.transferTo(localFile);
-        log.info("Upload image to local file: " + localFile.getAbsolutePath());
+        try (InputStream inputStream = file.getInputStream()) {
+            s3Config.amazonS3Client().putObject(new PutObjectRequest(bucket, uuidFileName, inputStream, null)
+                    .withCannedAcl(CannedAccessControlList.PublicRead));
+        }
 
-
-        s3Config.amazonS3Client().putObject(new PutObjectRequest(bucket, uuidFileName, localFile).withCannedAcl(CannedAccessControlList.PublicRead));
         String s3Url = s3Config.amazonS3Client().getUrl(bucket, uuidFileName).toString();
-
-        localFile.delete();
+        log.info("Upload image to S3: " + s3Url);
 
         return s3Url;
     }
@@ -69,10 +90,10 @@ public class ImageService {
 
         Goal goal = goalRepository.save(updatedGoal);
 
-        GoalImage goalImage = GoalImage.builder()
-                .goal(goal)
-                .image_url(url)
-                .build();
+        GoalImage findGoalImage = goalImageRepository.findByGoal_Id(goalId)
+                .orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_IMAGE_NOT_FOUND));
+
+        GoalImage goalImage = findGoalImage.updateImage(url);
         goalImageRepository.save(goalImage);
 
         GoalDetailResponse goalDetailResponse = GoalDetailResponse.builder()

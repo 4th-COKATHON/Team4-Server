@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity
 @Getter
 @Builder
@@ -24,4 +25,11 @@ public class GoalImage extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "goal_id")
     private Goal goal;
+
+    public GoalImage updateImage(String image_url) {
+        if (image_url != null) {
+            this.image_url = image_url;
+        }
+        return this;
+    }
 }
