@@ -29,24 +29,19 @@ public class GoalService {
     @Transactional
     public GoalCreateResponse createGoal(GoalCreateRequest goalCreateRequest) {
 
-        List<Long> goalIds = new ArrayList<>();
+        BucketList bucketList = bucketListRepository.findById(goalCreateRequest.getBucketListId())
+                .orElseThrow(() -> new TempHandler(ErrorStatus.BUCKETLIST_NOT_FOUND));
 
-        for (Long bucketListId : goalCreateRequest.getBucketListIds()) {
+        Goal goal = Goal.builder()
+                .year(LocalDate.now().getYear())
+                .category(bucketList.getCategory().toString())
+                .content(bucketList.getContent())
+                .finished(false)
+                .build();
 
-            BucketList bucketList = bucketListRepository.findById(bucketListId)
-                    .orElseThrow(() -> new TempHandler(ErrorStatus.BUCKETLIST_NOT_FOUND));
+        goalRepository.save(goal);
 
-            Goal goal = Goal.builder()
-                    .year(LocalDate.now().getYear())
-                    .category(bucketList.getCategory().toString())
-                    .content(bucketList.getContent())
-                    .build();
-
-            goalIds.add(goal.getId());
-            goalRepository.save(goal);
-        }
-
-        return new GoalCreateResponse(goalIds);
+        return new GoalCreateResponse(goal.getId());
     }
 
     public GoalDetailResponse getGoalDetail(Long goalId) {
@@ -79,6 +74,7 @@ public class GoalService {
         for (Goal goal : goals) {
 
             GoalItemResponse goalItemResponse = GoalItemResponse.builder()
+                    .id(goal.getId())
                     .content(goal.getContent())
                     .finished(goal.getFinished())
                     .dueDate(goal.getDueDate())
@@ -101,6 +97,7 @@ public class GoalService {
                     .orElseThrow(() -> new TempHandler(ErrorStatus.GOAL_NOT_FOUND));
 
             GoalFinishedItemResponse goalFinishedItemResponse = GoalFinishedItemResponse.builder()
+                    .id(goal.getId())
                     .content(goal.getContent())
                     .finished(goal.getFinished())
                     .image_url(goalImage.getImage_url())
