@@ -101,6 +101,7 @@ public class GoalService {
             GoalItemResponse goalItemResponse = GoalItemResponse.builder()
                     .id(goal.getId())
                     .content(goal.getContent())
+                    .category(goal.getCategory())
                     .finished(goal.getFinished())
                     .dueDate(goal.getDueDate())
                     .build();
@@ -124,6 +125,7 @@ public class GoalService {
             GoalFinishedItemResponse goalFinishedItemResponse = GoalFinishedItemResponse.builder()
                     .id(goal.getId())
                     .content(goal.getContent())
+                    .category(goal.getCategory())
                     .finished(goal.getFinished())
                     .image_url(goalImage.getImage_url())
                     .build();

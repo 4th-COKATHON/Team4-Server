@@ -15,6 +15,7 @@ public class GoalItemResponse {
 
     private Long id;
     private String content;
+    private String category;
     private Boolean finished;
     private LocalDate dueDate;
 }
