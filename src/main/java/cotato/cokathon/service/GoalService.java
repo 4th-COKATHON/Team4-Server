@@ -42,6 +42,13 @@ public class GoalService {
 
         goalRepository.save(goal);
 
+        GoalImage goalImage = GoalImage.builder()
+                .image_url(bucketList.getImage_url())
+                .goal(goal)
+                .build();
+
+        goalImageRepository.save(goalImage);
+
         return new GoalCreateResponse(goal.getId());
     }
 

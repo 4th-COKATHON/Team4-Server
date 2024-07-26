@@ -22,4 +22,8 @@ public class BucketList extends BaseEntity {
     private Category category;
 
     private String content;
+
+    private String image_url;
+
+    private Boolean checked;
 }
